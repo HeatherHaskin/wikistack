@@ -6,26 +6,32 @@ var Page = models.Page;
 var User = models.User;
 
 router.get('/', function(req, res, next){
-  res.redirect('/')
+  Page.findAll()
+  .then(function(pages){
+    res.render('index', {
+      pages: pages,
+    })
+  })
 });
 
 router.post('/', function(req, res, next){
-  var page = Page.build({
-    title: req.body.title,
-    content: req.body.page_content,
-    status: req.body.status,
-  });
-  var user = User.build({
-    name: req.body.author_name,
-    email: req.body.author_email,
+  User.findOrCreate({where: {name: req.body.author_name, email: req.body.author_email}})
+  .then(function(userReturnArr){
+    var user = userReturnArr[0];
+    var page = Page.build({
+        title: req.body.title,
+        content: req.body.page_content,
+        status: req.body.status,
+      });
+
+      return page.save().then(function (page) {
+        return page.setAuthor(user);
+      });
   })
-  page.save()
-  .then(function(result){
-    return user.save();
+  .then(function(savedPage){
+    res.redirect(savedPage.route);
   })
-  .then(function(result){
-    res.json(page);
-  })
+  .catch(next);
 });
 
 router.get('/add', function(req, res, next){

@@ -40,6 +40,8 @@ const User = dbConnection.define('users', {
   email: {type: Sequelize.STRING, allowNull: false, validate: {isEmail: true}},
 });
 
+Page.belongsTo(User, { as: 'author' });
+
 module.exports = {
   dbConnection: dbConnection,
   Page: Page,
