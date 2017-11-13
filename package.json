@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon -e html,js,css app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,18 @@
   "bugs": {
     "url": "https://github.com/niharikanarain/wikistack/issues"
   },
-  "homepage": "https://github.com/niharikanarain/wikistack#readme"
+  "homepage": "https://github.com/niharikanarain/wikistack#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "nunjucks": "^3.0.1",
+    "path": "^0.12.7",
+    "pg": "^7.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.22.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
 }
